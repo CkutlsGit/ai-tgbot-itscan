@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
-import ru.itscan.service.interfaces.ParserInterface;
+import ru.itscan.service.interfaces.Parser;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RssParserService implements ParserInterface {
+public class RssParserService implements Parser {
 
     private final VectorStore vectorStore;
 
