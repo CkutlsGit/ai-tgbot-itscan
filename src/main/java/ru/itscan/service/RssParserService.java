@@ -36,7 +36,8 @@ public class RssParserService implements Parser {
             save(articles);
         }
         catch (Exception e) {
-            log.error("Ошибка при парсинге");
+            log.error("Ошибка при парсинге - {}", e.getMessage());
+            log.error(" FULL {} {} {} {}", e.getClass(), e.getMessage(), e.getCause(), e.getStackTrace());
         }
     }
 
