@@ -1,5 +1,5 @@
 package ru.itscan.service.interfaces;
 
-public interface ParserInterface {
+public interface Parser {
     void parse(String url);
 }
