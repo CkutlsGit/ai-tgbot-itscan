@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.springframework.ai.document.Document;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 import ru.itscan.service.interfaces.Parser;
@@ -49,7 +50,16 @@ public class RssParserService implements Parser {
             return;
         }
 
-        vectorStore.add(documents);
+        TokenTextSplitter splitter = TokenTextSplitter.builder()
+                .withChunkSize(500)
+                .withMinChunkSizeChars(100)
+                .withMinChunkLengthToEmbed(50)
+                .withMaxNumChunks(1000)
+                .withKeepSeparator(true)
+                .build();
+        List<Document> chunks = splitter.apply(documents);
+
+        vectorStore.add(chunks);
     }
 
     private Document toDocument(SyndEntry article) {
