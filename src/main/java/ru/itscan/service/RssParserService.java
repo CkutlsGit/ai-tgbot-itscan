@@ -1,11 +1,13 @@
 package ru.itscan.service;
 
+import com.rometools.rome.feed.synd.SyndContent;
 import com.rometools.rome.feed.synd.SyndEntry;
 import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jsoup.Jsoup;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -50,10 +53,15 @@ public class RssParserService implements Parser {
     }
 
     private Document toDocument(SyndEntry article) {
-        String content = article.getTitle() + "\n\n" + article.getDescription();
+        String rawContent = article.getContents() != null && !article.getContents().isEmpty() ? article.getContents()
+                .stream()
+                .map(SyndContent::getValue)
+                .collect(Collectors.joining("\n"))
+        : (article.getDescription() != null ? article.getDescription().getValue() : "");
         Map<String, Object> metadata = Map.of(
                 "url", article.getLink()
         );
+        String content = article.getTitle() + Jsoup.parse(rawContent).text();
         String id = UUID.nameUUIDFromBytes(article.getLink().getBytes(StandardCharsets.UTF_8)).toString();
 
         return new Document(id, content, metadata);
