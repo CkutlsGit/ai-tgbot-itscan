@@ -3,6 +3,7 @@ package ru.itscan.bot.command;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -32,6 +33,7 @@ public class QuestionCommand implements Command {
     }
 
     @Override
+    @Async("botExecutor")
     public void handle(Update update) {
         Long chatId = update.getMessage().getChatId();
         String text = update.getMessage().getText();
