@@ -27,7 +27,7 @@ public class StartCommand implements Command {
         if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage message = SendMessage.builder()
                     .chatId(update.getMessage().getChatId())
-                    .text("Привет! Я IT-Scann, бот который даст ответы на твои вопросы связанные с IT.")
+                    .text("Привет! Я IT-Scann, бот который даст ответы на твои вопросы связанные с IT. Чтобы спросить вопрос напиши /ask")
                     .build();
             eventPublisher.publishEvent(new MessageEvent(this, message));
         }
