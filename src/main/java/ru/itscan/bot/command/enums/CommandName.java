@@ -4,7 +4,8 @@ public enum CommandName {
     START("START_COMMAND"),
     TEST("TEST_COMMAND"),
     ASK("ASK_COMMAND"),
-    PROFILE("PROFILE_COMMAND");
+    PROFILE("PROFILE_COMMAND"),
+    BUY("BUY_COMMAND");
 
     private final String name;
 

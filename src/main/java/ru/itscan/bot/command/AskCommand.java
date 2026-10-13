@@ -5,9 +5,11 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
+import ru.itscan.bot.service.UserService;
 import ru.itscan.bot.service.UserStateService;
 
 @Component
@@ -16,12 +18,14 @@ public class AskCommand implements Command {
 
     private final ApplicationEventPublisher eventPublisher;
     private final UserStateService userStateService;
+    private final UserService userService;
 
     @Override
     public boolean canHandle(Update update) {
         return update.hasMessage()
                 && update.getMessage().hasText()
-                && update.getMessage().getText().equals("/ask");
+                && update.getMessage().getText().equals("/ask")
+                && userService.getUserById(update.getMessage().getChatId()).getCountRequest() > 0;
     }
 
     @Override
@@ -39,6 +43,6 @@ public class AskCommand implements Command {
 
     @Override
     public String getCommand() {
-        return "";
+        return CommandName.ASK.getName();
     }
 }

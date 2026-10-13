@@ -11,10 +11,9 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
 import ru.itscan.bot.configuration.BotProperties;
-import ru.itscan.bot.entity.User;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
-import ru.itscan.bot.repository.UserRepository;
+import ru.itscan.bot.service.UserService;
 import ru.itscan.bot.service.UserStateService;
 import ru.itscan.dto.AskDto;
 
@@ -26,18 +25,15 @@ public class QuestionCommand implements Command {
     private final ApplicationEventPublisher eventPublisher;
     private final UserStateService userStateService;
     private final RestTemplate restTemplate;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final BotProperties botProperties;
-
-    private User user;
 
     @Override
     public boolean canHandle(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) return false;
 
         Long chatId = update.getMessage().getChatId();
-        user = userRepository.getUserById(update.getMessage().getChatId());
-        return userStateService.getState(chatId) == UserState.WAITING_FOR_QUESTION && user.getCountRequest() > 0;
+        return userStateService.getState(chatId) == UserState.WAITING_FOR_QUESTION;
     }
 
     @Override
@@ -73,7 +69,7 @@ public class QuestionCommand implements Command {
         ));
         userStateService.clear(chatId);
         if (!answer.equals(botProperties.baseAnswerRequest())) {
-            user.setCountRequest(user.getCountRequest() - 1);
+            userService.decrementUserRequest(chatId);
         }
     }
 
