@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RssSchedule {
 
-    private final List<String> RESOURCES = List.of(
+    private static final List<String> RESOURCES = List.of(
             "https://habr.com/ru/rss/hubs/career/articles/?fl=ru",
             "https://habr.com/ru/rss/hubs/research/articles/?fl=ru",
             "https://habr.com/ru/rss/hubs/startuprise/articles/?fl=ru",
