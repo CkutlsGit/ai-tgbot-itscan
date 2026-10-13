@@ -10,6 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
+import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.entity.User;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
@@ -26,6 +27,7 @@ public class QuestionCommand implements Command {
     private final UserStateService userStateService;
     private final RestTemplate restTemplate;
     private final UserRepository userRepository;
+    private final BotProperties botProperties;
 
     private User user;
 
@@ -50,10 +52,10 @@ public class QuestionCommand implements Command {
                 .build();
         eventPublisher.publishEvent(new MessageEvent(this, messageBot));
 
-        String answer = "Не удалось получить ответ";
+        String answer = botProperties.baseAnswerRequest();
         try {
             answer = restTemplate.postForObject(
-                    "http://localhost:8080/api/v1/rag/ask",
+                    botProperties.askUrl(),
                     new AskDto(text),
                     String.class
             );
@@ -70,7 +72,7 @@ public class QuestionCommand implements Command {
                         .build()
         ));
         userStateService.clear(chatId);
-        if (!answer.equals("Не удалось получить ответ")) {
+        if (!answer.equals(botProperties.baseAnswerRequest())) {
             user.setCountRequest(user.getCountRequest() - 1);
         }
     }

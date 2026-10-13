@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
+import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.event.MessageEvent;
 
 @Component
@@ -14,6 +15,7 @@ import ru.itscan.bot.event.MessageEvent;
 public class StartCommand implements Command {
 
     private final ApplicationEventPublisher eventPublisher;
+    private final BotProperties botProperties;
 
     @Override
     public boolean canHandle(Update update) {
@@ -27,7 +29,7 @@ public class StartCommand implements Command {
         if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage message = SendMessage.builder()
                     .chatId(update.getMessage().getChatId())
-                    .text("Привет! Я IT-Scann, бот который даст ответы на твои вопросы связанные с IT. Чтобы спросить вопрос напиши /ask")
+                    .text(botProperties.baseStartMessage())
                     .build();
             eventPublisher.publishEvent(new MessageEvent(this, message));
         }

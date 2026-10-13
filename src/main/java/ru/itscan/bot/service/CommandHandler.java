@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.interfaces.Command;
+import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.entity.User;
 import ru.itscan.bot.repository.UserRepository;
 
@@ -15,6 +16,7 @@ public class CommandHandler {
 
     private final Collection<Command> commands;
     private final UserRepository userRepository;
+    private final BotProperties botProperties;
 
     public void handle(Update update) {
         if (!update.hasMessage()) return;
@@ -31,7 +33,7 @@ public class CommandHandler {
 
     private void registerUserIfAbsent(Long chatId) {
         if (!userRepository.existsUserById(chatId)) {
-            userRepository.save(new User(chatId, 3));
+            userRepository.save(new User(chatId, botProperties.baseCountRequest()));
         }
     }
 }

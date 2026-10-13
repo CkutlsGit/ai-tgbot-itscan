@@ -2,6 +2,7 @@ package ru.itscan.schedule;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.itscan.service.interfaces.Parser;
@@ -21,7 +22,7 @@ public class RssSchedule {
     );
     private final Parser parser;
 
-    @Scheduled(fixedRate = 43_200_000, initialDelay = 25_000)
+    @Scheduled(fixedRateString = "${parser.fixed-rate}", initialDelayString = "${parser.init-delay}")
     public void timeParse() {
       log.info("Start Schedule Parse");
 
