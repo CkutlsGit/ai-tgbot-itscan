@@ -10,8 +10,10 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
+import ru.itscan.bot.entity.User;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
+import ru.itscan.bot.repository.UserRepository;
 import ru.itscan.bot.service.UserStateService;
 import ru.itscan.dto.AskDto;
 
@@ -23,13 +25,17 @@ public class QuestionCommand implements Command {
     private final ApplicationEventPublisher eventPublisher;
     private final UserStateService userStateService;
     private final RestTemplate restTemplate;
+    private final UserRepository userRepository;
+
+    private User user;
 
     @Override
     public boolean canHandle(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) return false;
 
         Long chatId = update.getMessage().getChatId();
-        return userStateService.getState(chatId) == UserState.WAITING_FOR_QUESTION;
+        user = userRepository.getUserById(update.getMessage().getChatId());
+        return userStateService.getState(chatId) == UserState.WAITING_FOR_QUESTION && user.getCountRequest() > 0;
     }
 
     @Override
@@ -53,7 +59,7 @@ public class QuestionCommand implements Command {
             );
         }
         catch (Exception e) {
-            log.error("Ошибка при обработке запроса {}", e);
+            log.error("Ошибка при обработке запроса {}", e.getMessage());
         }
 
         eventPublisher.publishEvent(new MessageEvent(
@@ -64,6 +70,9 @@ public class QuestionCommand implements Command {
                         .build()
         ));
         userStateService.clear(chatId);
+        if (!answer.equals("Не удалось получить ответ")) {
+            user.setCountRequest(user.getCountRequest() - 1);
+        }
     }
 
     @Override
