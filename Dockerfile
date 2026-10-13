@@ -10,4 +10,4 @@ RUN chown -R itscan:itscan /app
 
 USER itscan
 
-ENTRYPOINT ["java", "-jar", "itscan.jar"]
+ENTRYPOINT ["java", "-jar", "itscan.jar", "--spring.profiles.active=dev"]

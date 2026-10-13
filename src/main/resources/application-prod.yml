@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: itscantgbot
+  # config:
+  #   import: file:.env[.properties]
+
+  ai:
+    openai:
+      api-key: apikey
+      base-url: http://host.docker.internal:1234/v1
+      timeout: 200s
+      chat:
+        model: qwen/qwen3-8b
+      embedding:
+        options:
+          model: text-embedding-nomic-embed-text-v1.5
+    prompt-path: classpath:prompts/system-prompt.txt
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+        dimensions: 768
+
+  datasource:
+    jdbc-url: jdbc:postgresql://postgres-user:5432/itscan-user
+    username: postgres
+    password: postgres123
+
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+telegram:
+  bot:
+    token: ${TOKEN_BOT}
+    base-count-request: 3
+    base-answer-request: "Не удалось получить ответ"
+    base-start-message: "Привет! Я IT-Scann, бот который даст ответы на твои вопросы связанные с IT. Чтобы спросить вопрос напиши /ask"
+    ask-url: http://localhost:8080/api/v1/rag/ask
+
+parser:
+  init-delay: 25000
+  fixed-rate: 43200000
+
+vector:
+  datasource:
+    jdbc-url: jdbc:postgresql://pgvector-itscan:5432/itscan-article
+    username: pgvector
+    password: pgvector123
