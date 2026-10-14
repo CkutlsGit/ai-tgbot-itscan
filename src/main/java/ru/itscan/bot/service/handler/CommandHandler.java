@@ -1,9 +1,10 @@
-package ru.itscan.bot.service;
+package ru.itscan.bot.service.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.interfaces.Command;
+import ru.itscan.bot.service.UserService;
 
 import java.util.Collection;
 

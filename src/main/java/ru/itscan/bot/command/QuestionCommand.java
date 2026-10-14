@@ -14,7 +14,6 @@ import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
 import ru.itscan.bot.service.UserService;
-import ru.itscan.bot.service.UserStateService;
 import ru.itscan.dto.AskDto;
 
 @Component
@@ -23,7 +22,6 @@ import ru.itscan.dto.AskDto;
 public class QuestionCommand implements Command {
 
     private final ApplicationEventPublisher eventPublisher;
-    private final UserStateService userStateService;
     private final RestTemplate restTemplate;
     private final UserService userService;
     private final BotProperties botProperties;
@@ -32,8 +30,7 @@ public class QuestionCommand implements Command {
     public boolean canHandle(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) return false;
 
-        Long chatId = update.getMessage().getChatId();
-        return userStateService.getState(chatId) == UserState.WAITING_FOR_QUESTION;
+        return userService.getStateUserById(update.getEditedMessage().getChatId()) == UserState.WAITING_FOR_QUESTION;
     }
 
     @Override
@@ -67,7 +64,8 @@ public class QuestionCommand implements Command {
                         .text(answer)
                         .build()
         ));
-        userStateService.clear(chatId);
+
+        userService.setStatusUser(chatId, UserState.IDLE);
         if (!answer.equals(botProperties.baseAnswerRequest())) {
             userService.decrementUserRequest(chatId);
         }

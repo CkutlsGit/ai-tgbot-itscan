@@ -1,4 +1,4 @@
-package ru.itscan.bot.service;
+package ru.itscan.bot.service.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

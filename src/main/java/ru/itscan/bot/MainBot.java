@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateConsumer;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.itscan.bot.service.CommandHandler;
-import ru.itscan.bot.service.PreCheckoutQueryHandler;
-import ru.itscan.bot.service.SuccessfulPaymentHandler;
+import ru.itscan.bot.service.handler.CommandHandler;
+import ru.itscan.bot.service.handler.PreCheckoutQueryHandler;
+import ru.itscan.bot.service.handler.SuccessfulPaymentHandler;
 
 @Component
 @RequiredArgsConstructor

@@ -10,14 +10,12 @@ import ru.itscan.bot.command.interfaces.Command;
 import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
 import ru.itscan.bot.service.UserService;
-import ru.itscan.bot.service.UserStateService;
 
 @Component
 @RequiredArgsConstructor
 public class AskCommand implements Command {
 
     private final ApplicationEventPublisher eventPublisher;
-    private final UserStateService userStateService;
     private final UserService userService;
 
     @Override
@@ -31,13 +29,15 @@ public class AskCommand implements Command {
     @Override
     public void handle(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
+            Long chatId = update.getMessage().getChatId();
+
             SendMessage message = SendMessage.builder()
-                    .chatId(update.getMessage().getChatId())
+                    .chatId(chatId)
                     .text("Внимательно тебя слушаю...")
                     .build();
 
             eventPublisher.publishEvent(new MessageEvent(this, message));
-            userStateService.setStates(update.getMessage().getChatId(), UserState.WAITING_FOR_QUESTION);
+            userService.setStatusUser(chatId, UserState.WAITING_FOR_QUESTION);
         }
     }
 

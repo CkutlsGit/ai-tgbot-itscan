@@ -1,4 +1,4 @@
-package ru.itscan.bot.service;
+package ru.itscan.bot.service.handler;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment;
 import ru.itscan.bot.event.MessageEvent;
+import ru.itscan.bot.service.UserService;
 
 @Service
 @RequiredArgsConstructor

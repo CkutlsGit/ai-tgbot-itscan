@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.entity.User;
+import ru.itscan.bot.enums.UserState;
 import ru.itscan.bot.repository.UserRepository;
 
 @Service
@@ -55,6 +56,18 @@ public class UserService {
         User user = userRepository.getUserById(id);
 
         user.setCountRequest(user.getCountRequest() - quantity);
+    }
+
+    @Transactional()
+    public void setStatusUser(Long id, UserState userState) {
+        User user = userRepository.getUserById(id);
+
+        user.setUserState(userState);
+    }
+
+    @Transactional(readOnly = true)
+    public UserState getStateUserById(Long id) {
+        return userRepository.getUserById(id).getUserState();
     }
 
     @Transactional(readOnly = true)
