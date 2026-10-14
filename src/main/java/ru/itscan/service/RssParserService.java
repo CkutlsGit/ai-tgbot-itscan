@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.springframework.ai.document.Document;
-import org.springframework.ai.transformer.splitter.TokenTextSplitter;
-import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
 import ru.itscan.service.interfaces.Parser;
 
@@ -26,7 +24,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RssParserService implements Parser {
 
-    private final VectorStore vectorStore;
+    private final VectorService vectorService;
 
     public void parse(String url) {
         try {
@@ -37,29 +35,11 @@ public class RssParserService implements Parser {
                     .map(this::toDocument)
                     .toList();
 
-            save(articles);
+            vectorService.save(articles);
         }
         catch (Exception e) {
-            log.error("Ошибка при парсинге - {}", e.getMessage());
-            log.error(" FULL {} {} {} {}", e.getClass(), e.getMessage(), e.getCause(), e.getStackTrace());
+            log.error("Ошибка при парсинге - {} {}", e, url);
         }
-    }
-
-    private void save(List<Document> documents) {
-        if (documents == null || documents.isEmpty()) {
-            return;
-        }
-
-        TokenTextSplitter splitter = TokenTextSplitter.builder()
-                .withChunkSize(500)
-                .withMinChunkSizeChars(100)
-                .withMinChunkLengthToEmbed(50)
-                .withMaxNumChunks(1000)
-                .withKeepSeparator(true)
-                .build();
-        List<Document> chunks = splitter.apply(documents);
-
-        vectorStore.add(chunks);
     }
 
     private Document toDocument(SyndEntry article) {
@@ -68,9 +48,11 @@ public class RssParserService implements Parser {
                 .map(SyndContent::getValue)
                 .collect(Collectors.joining("\n"))
         : (article.getDescription() != null ? article.getDescription().getValue() : "");
+
         Map<String, Object> metadata = Map.of(
-                "url", article.getLink()
+                "url", article.getLink() != null ? article.getLink() : UUID.randomUUID().toString()
         );
+
         String content = article.getTitle() + Jsoup.parse(rawContent).text();
         String id = UUID.nameUUIDFromBytes(article.getLink().getBytes(StandardCharsets.UTF_8)).toString();
 
