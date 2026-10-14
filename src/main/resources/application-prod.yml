@@ -32,7 +32,6 @@ telegram:
     base-count-request: 3
     base-answer-request: "Не удалось получить ответ"
     base-start-message: "Привет! Я IT-Scann, бот который даст ответы на твои вопросы связанные с IT. Чтобы спросить вопрос напиши /ask"
-    ask-url: http://localhost:8080/api/v1/rag/ask
 
 parser:
   init-delay: 25000
