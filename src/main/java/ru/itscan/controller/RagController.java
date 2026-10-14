@@ -13,8 +13,8 @@ import ru.itscan.dto.AskDto;
 import java.util.List;
 
 @RestController
-@Slf4j
 @RequestMapping("/api/v1/rag")
+@Slf4j
 public class RagController {
 
     private final ChatClient chatClient;

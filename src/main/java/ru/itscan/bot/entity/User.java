@@ -6,11 +6,11 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "users")
 public class User {
 
     @Id
