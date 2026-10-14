@@ -8,6 +8,7 @@ import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvi
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Service;
+import ru.itscan.configuration.RagProperties;
 import ru.itscan.configuration.SystemPromptProvider;
 
 @Service
@@ -18,14 +19,15 @@ public class RagService {
     private final ChatClient chatClient;
     private final VectorStore vectorStore;
     private final SystemPromptProvider promptProvider;
+    private final RagProperties ragProperties;
     private QuestionAnswerAdvisor advisor;
 
     @PostConstruct
     void init() {
         advisor = QuestionAnswerAdvisor.builder(vectorStore)
                 .searchRequest(SearchRequest.builder()
-                        .topK(5)
-                        .similarityThreshold(0.7)
+                        .topK(ragProperties.topK())
+                        .similarityThreshold(ragProperties.similarityThreshold())
                         .build()
                 )
                 .build();

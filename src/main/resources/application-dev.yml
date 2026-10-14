@@ -38,6 +38,10 @@ parser:
   init-delay: 25000
   fixed-rate: 43200000
 
+rag:
+  top-k: 5
+  similarity-threshold: 0.7
+
 vector:
   datasource:
     jdbc-url: jdbc:postgresql://pgvector-itscan:5432/itscan-article
