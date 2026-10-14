@@ -1,5 +1,6 @@
 package ru.itscan.configuration;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -21,18 +22,18 @@ public class SystemPromptProvider {
 
     private String cachePrompt;
 
-    public String getPrompt() {
-        if (cachePrompt == null) {
-            Resource resource = resourceLoader.getResource(promptPath);
-
-            try {
-                cachePrompt = resource.getContentAsString(StandardCharsets.UTF_8);
-            }
-            catch (IOException e) {
-                throw new UncheckedIOException("Не удалось загрузить системный промпт", e);
-            }
+    @PostConstruct
+    void init() {
+        Resource resource = resourceLoader.getResource(promptPath);
+        try {
+            cachePrompt = resource.getContentAsString(StandardCharsets.UTF_8);
         }
+        catch (IOException e) {
+            throw new UncheckedIOException("Не удалось загрузить системный промпт", e);
+        }
+    }
 
+    public String getPrompt() {
         return cachePrompt;
     }
 }
