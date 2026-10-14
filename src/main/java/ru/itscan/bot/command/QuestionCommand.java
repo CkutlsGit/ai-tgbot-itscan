@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
 import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.entity.enums.UserState;
@@ -69,10 +68,5 @@ public class QuestionCommand implements Command {
         if (!answer.equals(botProperties.baseAnswerRequest())) {
             userService.decrementUserRequest(chatId);
         }
-    }
-
-    @Override
-    public String getCommand() {
-        return CommandName.ASK.getName();
     }
 }

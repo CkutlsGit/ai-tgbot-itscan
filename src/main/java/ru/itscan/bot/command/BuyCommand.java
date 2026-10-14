@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice;
-import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
 import ru.itscan.bot.event.MessageEvent;
 
@@ -40,10 +39,5 @@ public class BuyCommand implements Command {
                 .build();
 
         eventPublisher.publishEvent(new MessageEvent(this, invoice));
-    }
-
-    @Override
-    public String getCommand() {
-        return CommandName.BUY.getName();
     }
 }
