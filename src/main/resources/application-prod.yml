@@ -15,10 +15,6 @@ spring:
         options:
           model: text-embedding-nomic-embed-text-v1.5
     prompt-path: classpath:prompts/system-prompt.txt
-    vectorstore:
-      pgvector:
-        initialize-schema: true
-        dimensions: 768
 
   datasource:
     jdbc-url: jdbc:postgresql://postgres-user:5432/itscan-user
