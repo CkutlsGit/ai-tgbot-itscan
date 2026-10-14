@@ -1,8 +1,6 @@
 spring:
   application:
     name: itscantgbot
-  # config:
-  #   import: file:.env[.properties]
 
   ai:
     openai:
@@ -17,9 +15,9 @@ spring:
     prompt-path: classpath:prompts/system-prompt.txt
 
   datasource:
-    jdbc-url: jdbc:postgresql://postgres-user:5432/itscan-user
-    username: postgres
-    password: postgres123
+    jdbc-url: ${POSTGRES_DB_URL}
+    username: ${POSTGRES_DB_USERNAME}
+    password: ${POSTGRES_DB_PASSWORD}
 
   jpa:
     show-sql: false
@@ -39,6 +37,6 @@ parser:
 
 vector:
   datasource:
-    jdbc-url: jdbc:postgresql://pgvector-itscan:5432/itscan-article
-    username: pgvector
-    password: pgvector123
+    jdbc-url: ${PGVECTOR_DB_URL}
+    username: ${PGVECTOR_DB_USERNAME}
+    password: ${PGVECTOR_DB_PASSWORD}
