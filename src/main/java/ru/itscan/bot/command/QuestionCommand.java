@@ -29,7 +29,7 @@ public class QuestionCommand implements Command {
     public boolean canHandle(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) return false;
 
-        return userService.getStateUserById(update.getEditedMessage().getChatId()) == UserState.WAITING_FOR_QUESTION;
+        return userService.getStateUserById(update.getMessage().getChatId()) == UserState.WAITING_FOR_QUESTION;
     }
 
     @Override
