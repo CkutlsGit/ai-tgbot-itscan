@@ -6,7 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record BotProperties(
         String baseAnswerRequest,
         String baseStartMessage,
-        String askUrl,
         int baseCountRequest
 ) {
 }
