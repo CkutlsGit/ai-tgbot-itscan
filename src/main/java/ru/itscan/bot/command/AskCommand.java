@@ -7,7 +7,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.itscan.bot.command.enums.CommandName;
 import ru.itscan.bot.command.interfaces.Command;
-import ru.itscan.bot.enums.UserState;
+import ru.itscan.bot.entity.enums.UserState;
 import ru.itscan.bot.event.MessageEvent;
 import ru.itscan.bot.service.UserService;
 

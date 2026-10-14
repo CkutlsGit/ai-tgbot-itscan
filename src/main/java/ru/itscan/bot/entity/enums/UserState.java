@@ -1,4 +1,4 @@
-package ru.itscan.bot.enums;
+package ru.itscan.bot.entity.enums;
 
 public enum UserState {
     IDLE,

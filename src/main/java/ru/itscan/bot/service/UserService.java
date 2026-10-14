@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itscan.bot.configuration.BotProperties;
 import ru.itscan.bot.entity.User;
-import ru.itscan.bot.enums.UserState;
+import ru.itscan.bot.entity.enums.UserState;
 import ru.itscan.bot.repository.UserRepository;
 
 @Service

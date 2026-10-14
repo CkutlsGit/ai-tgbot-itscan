@@ -2,7 +2,7 @@ package ru.itscan.bot.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.itscan.bot.enums.UserState;
+import ru.itscan.bot.entity.enums.UserState;
 
 @Entity
 @Table(name = "users")
@@ -11,7 +11,6 @@ import ru.itscan.bot.enums.UserState;
 @Getter
 @Setter
 public class User {
-
 
     public User(Long id, Integer countRequest) {
         this.id = id;
