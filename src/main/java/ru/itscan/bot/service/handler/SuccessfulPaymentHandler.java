@@ -1,6 +1,7 @@
 package ru.itscan.bot.service.handler;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,6 +11,7 @@ import ru.itscan.bot.event.MessageEvent;
 import ru.itscan.bot.service.UserService;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SuccessfulPaymentHandler {
 
@@ -22,7 +24,15 @@ public class SuccessfulPaymentHandler {
             String payload = payment.getInvoicePayload();
 
             if (payload != null && payload.startsWith("buy_request_")) {
-                Long chatId = Long.parseLong(payload.replace("buy_request_", ""));
+                Long chatId;
+
+                try {
+                    chatId = Long.parseLong(payload.replace("buy_request_", ""));
+                }
+                catch (NumberFormatException e) {
+                    log.error("Неверный формат айди - {}", e.getMessage());
+                    return;
+                }
 
                 userService.incrementUserRequest(chatId);
 
