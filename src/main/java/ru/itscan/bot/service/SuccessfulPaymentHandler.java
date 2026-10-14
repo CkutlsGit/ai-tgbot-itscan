@@ -10,7 +10,7 @@ import ru.itscan.bot.event.MessageEvent;
 
 @Service
 @RequiredArgsConstructor
-public class SuccessfulPaymentHandle {
+public class SuccessfulPaymentHandler {
 
     private final UserService userService;
     private final ApplicationEventPublisher eventPublisher;
