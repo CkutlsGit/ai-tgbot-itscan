@@ -35,6 +35,11 @@ parser:
   init-delay: 25000
   fixed-rate: 43200000
 
+rag:
+  top-k: 5
+  similarity-threshold: 0.7
+
+
 vector:
   datasource:
     jdbc-url: ${PGVECTOR_DB_URL}
