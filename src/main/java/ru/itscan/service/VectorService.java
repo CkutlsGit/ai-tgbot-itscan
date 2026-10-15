@@ -22,6 +22,8 @@ public class VectorService {
 
         List<Document> chunks = splitter.apply(documents);
 
+        if (chunks.isEmpty()) return;
+
         vectorStore.add(chunks);
     }
 }
