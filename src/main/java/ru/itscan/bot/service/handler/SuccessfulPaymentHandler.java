@@ -30,7 +30,7 @@ public class SuccessfulPaymentHandler {
                     chatId = Long.parseLong(payload.replace("buy_request_", ""));
                 }
                 catch (NumberFormatException e) {
-                    log.error("Неверный формат айди - {}", e.getMessage());
+                    log.error("Неверный формат айди", e);
                     return;
                 }
 

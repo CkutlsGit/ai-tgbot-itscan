@@ -52,7 +52,7 @@ public class QuestionCommand implements Command {
             success = answer != null && !answer.isBlank();
         }
         catch (Exception e) {
-            log.error("Ошибка при обработке запроса {}", e.getMessage());
+            log.error("Ошибка при обработке запроса", e);
             answer = botProperties.baseAnswerRequest();
         }
 
