@@ -17,21 +17,8 @@ import ru.itscan.configuration.SystemPromptProvider;
 public class RagService {
 
     private final ChatClient chatClient;
-    private final VectorStore vectorStore;
     private final SystemPromptProvider promptProvider;
-    private final RagProperties ragProperties;
-    private QuestionAnswerAdvisor advisor;
-
-    @PostConstruct
-    void init() {
-        advisor = QuestionAnswerAdvisor.builder(vectorStore)
-                .searchRequest(SearchRequest.builder()
-                        .topK(ragProperties.topK())
-                        .similarityThreshold(ragProperties.similarityThreshold())
-                        .build()
-                )
-                .build();
-    }
+    private final QuestionAnswerAdvisor advisor;
 
     public String askModel(String prompt) {
         return chatClient.prompt()
