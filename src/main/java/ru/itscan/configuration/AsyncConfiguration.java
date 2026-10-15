@@ -10,12 +10,12 @@ import java.util.concurrent.Executor;
 public class AsyncConfiguration {
 
     @Bean("botExecutor")
-    public Executor botExecutor() {
+    public Executor botExecutor(AsyncProperties properties) {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(50);
-        executor.setQueueCapacity(100);
-        executor.setThreadNamePrefix("bot-async");
+        executor.setCorePoolSize(properties.corePoolSize());
+        executor.setMaxPoolSize(properties.maxPoolSize());
+        executor.setQueueCapacity(properties.queueCapacity());
+        executor.setThreadNamePrefix(properties.threadPrefix());
         executor.initialize();
 
         return executor;

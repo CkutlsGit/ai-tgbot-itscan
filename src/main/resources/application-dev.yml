@@ -45,6 +45,12 @@ rag:
   keep-separator: true
   embed-dimensions: 768
 
+async-thread:
+  core-pool-size: 10
+  max-pool-size: 50
+  queue-capacity: 100
+  thread-prefix: bot-async
+
 vector:
   datasource:
     jdbc-url: jdbc:postgresql://pgvector-itscan:5432/itscan-article
