@@ -3,7 +3,7 @@ package ru.itscan.bot.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itscan.bot.configuration.BotProperties;
+import ru.itscan.bot.configuration.property.BotProperties;
 import ru.itscan.bot.entity.User;
 import ru.itscan.bot.entity.enums.UserState;
 import ru.itscan.bot.repository.UserRepository;

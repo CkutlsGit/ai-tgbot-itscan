@@ -1,4 +1,4 @@
-package ru.itscan.configuration;
+package ru.itscan.configuration.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

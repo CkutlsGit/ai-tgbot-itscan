@@ -3,6 +3,7 @@ package ru.itscan.configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import ru.itscan.configuration.property.AsyncProperties;
 
 import java.util.concurrent.Executor;
 

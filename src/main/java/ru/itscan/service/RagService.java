@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
 import org.springframework.stereotype.Service;
-import ru.itscan.configuration.SystemPromptProvider;
+import ru.itscan.configuration.provider.SystemPromptProvider;
 
 @Service
 @Slf4j

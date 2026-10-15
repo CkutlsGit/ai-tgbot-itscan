@@ -1,4 +1,4 @@
-package ru.itscan.bot.configuration;
+package ru.itscan.bot.configuration.property;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

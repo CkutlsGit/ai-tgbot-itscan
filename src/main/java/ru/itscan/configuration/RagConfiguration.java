@@ -5,6 +5,7 @@ import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.itscan.configuration.property.RagProperties;
 
 @Configuration
 public class RagConfiguration {

@@ -1,4 +1,4 @@
-package ru.itscan.configuration;
+package ru.itscan.configuration.provider;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
