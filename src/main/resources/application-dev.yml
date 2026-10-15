@@ -43,6 +43,7 @@ rag:
   min-chunk-size-length-embed: 50
   max-chunk-size: 1000
   keep-separator: true
+  embed-dimensions: 768
 
 vector:
   datasource:

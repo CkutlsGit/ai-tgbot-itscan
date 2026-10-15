@@ -16,13 +16,14 @@ public class VectorStoreConfiguration {
     @Bean
     public PgVectorStore vectorStore(
             @Qualifier("vectorDataSource")DataSource dataSource,
-            EmbeddingModel embeddingModel
+            EmbeddingModel embeddingModel,
+            RagProperties properties
             )
     {
         return PgVectorStore.builder(new JdbcTemplate(dataSource), embeddingModel)
                 .initializeSchema(true)
                 .vectorTableName("vector_store")
-                .dimensions(768)
+                .dimensions(properties.embedDimensions())
                 .distanceType(PgVectorStore.PgDistanceType.COSINE_DISTANCE)
                 .indexType(PgVectorStore.PgIndexType.HNSW)
                 .build();

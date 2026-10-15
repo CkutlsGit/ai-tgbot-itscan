@@ -10,6 +10,7 @@ public record RagProperties(
         int minChunkSize,
         int minChunkSizeLengthEmbed,
         int maxChunkSize,
-        boolean keepSeparator
+        boolean keepSeparator,
+        int embedDimensions
 ) {
 }
