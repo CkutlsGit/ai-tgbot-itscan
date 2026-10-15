@@ -12,6 +12,7 @@ import org.springframework.ai.document.Document;
 import org.springframework.stereotype.Service;
 import ru.itscan.service.interfaces.Parser;
 
+import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -39,6 +40,20 @@ public class RssParserService implements Parser {
         }
         catch (Exception e) {
             log.error("Ошибка при парсинге - {} {}", e, url);
+        }
+    }
+
+    void parse(Reader reader) {
+        try {
+            SyndFeed resource = new SyndFeedInput().build(reader);
+
+            List<Document> articles = resource.getEntries().stream()
+                    .map(this::toDocument)
+                    .toList();
+
+            vectorService.save(articles);
+        } catch (Exception e) {
+            log.error("Ошибка при парсинге RSS", e);
         }
     }
 
