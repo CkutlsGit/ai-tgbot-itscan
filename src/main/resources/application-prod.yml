@@ -4,7 +4,7 @@ spring:
 
   ai:
     openai:
-      api-key: apikey
+      api-key: ${API_KEY_AI}
       base-url: http://host.docker.internal:1234/v1
       timeout: 200s
       chat:
