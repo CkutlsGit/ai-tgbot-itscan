@@ -1,6 +1,7 @@
 package ru.itscan.configuration;
 
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.transformer.splitter.TokenTextSplitter;
 import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -24,6 +25,17 @@ public class VectorStoreConfiguration {
                 .dimensions(768)
                 .distanceType(PgVectorStore.PgDistanceType.COSINE_DISTANCE)
                 .indexType(PgVectorStore.PgIndexType.HNSW)
+                .build();
+    }
+
+    @Bean
+    public TokenTextSplitter tokenTextSplitter(RagProperties properties) {
+        return TokenTextSplitter.builder()
+                .withChunkSize(properties.chunkSize())
+                .withMinChunkSizeChars(properties.minChunkSize())
+                .withMinChunkLengthToEmbed(properties.minChunkSizeLengthEmbed())
+                .withMaxNumChunks(properties.maxChunkSize())
+                .withKeepSeparator(properties.keepSeparator())
                 .build();
     }
 }

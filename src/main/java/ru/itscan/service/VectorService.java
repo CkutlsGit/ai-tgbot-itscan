@@ -13,13 +13,7 @@ import java.util.List;
 public class VectorService {
 
     private final VectorStore vectorStore;
-    private final  TokenTextSplitter splitter = TokenTextSplitter.builder()
-            .withChunkSize(500)
-            .withMinChunkSizeChars(100)
-            .withMinChunkLengthToEmbed(50)
-            .withMaxNumChunks(1000)
-            .withKeepSeparator(true)
-            .build();
+    private final TokenTextSplitter splitter;
 
     public void save(List<Document> documents) {
         if (documents == null || documents.isEmpty()) {
