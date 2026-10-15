@@ -49,12 +49,13 @@ public class RssParserService implements Parser {
                 .collect(Collectors.joining("\n"))
         : (article.getDescription() != null ? article.getDescription().getValue() : "");
 
+        String link = article.getLink() != null ? article.getLink() : UUID.randomUUID().toString();
         Map<String, Object> metadata = Map.of(
-                "url", article.getLink() != null ? article.getLink() : UUID.randomUUID().toString()
+                "url", link
         );
 
         String content = article.getTitle() + Jsoup.parse(rawContent).text();
-        String id = UUID.nameUUIDFromBytes(article.getLink().getBytes(StandardCharsets.UTF_8)).toString();
+        String id = UUID.nameUUIDFromBytes(link.getBytes(StandardCharsets.UTF_8)).toString();
 
         return new Document(id, content, metadata);
     }
