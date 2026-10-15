@@ -31,7 +31,7 @@ public class RssParserService implements Parser {
             SyndFeedInput parser = new SyndFeedInput();
             SyndFeed resource = parser.build(new XmlReader(new URL(url)));
 
-            List<Document> articles =resource.getEntries().stream()
+            List<Document> articles = resource.getEntries().stream()
                     .map(this::toDocument)
                     .toList();
 
